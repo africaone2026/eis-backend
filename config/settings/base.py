@@ -30,6 +30,7 @@ LOCAL_APPS = [
     'activities',
     'pilots',
     'notifications',
+    'outreach',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -195,6 +196,31 @@ ALLOWED_UPLOAD_TYPES = [
 
 # Admin Notification Settings
 ADMIN_EMAIL = config('ADMIN_EMAIL', default='admin@javisone.com')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@javisone.com')
 HOT_LEAD_THRESHOLD = 80
 WARM_LEAD_THRESHOLD = 60
 COOL_LEAD_THRESHOLD = 40
+
+# Telegram Bot Configuration
+TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default='')
+TELEGRAM_CHAT_ID = config('TELEGRAM_CHAT_ID', default='')
+
+# Automation Settings
+HOT_LEAD_RESPONSE_HOURS = config('HOT_LEAD_RESPONSE_HOURS', default=4, cast=int)
+WARM_LEAD_RESPONSE_HOURS = config('WARM_LEAD_RESPONSE_HOURS', default=24, cast=int)
+FOLLOWUP_REMINDER_HOURS = config('FOLLOWUP_REMINDER_HOURS', default=24, cast=int)
+
+# AWS SES Configuration (for outreach)
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
+AWS_SES_REGION = config('AWS_SES_REGION', default='us-east-1')
+AWS_SES_CONFIGURATION_SET = config('AWS_SES_CONFIGURATION_SET', default='outreach-tracking')
+
+# Outreach Email Settings
+OUTBOUND_FROM_EMAIL = config('OUTBOUND_FROM_EMAIL', default='inquiries@javisone.com')
+REPLY_TO_EMAIL = config('REPLY_TO_EMAIL', default='inquiries@javisone.com')
+
+# Outreach Limits
+MAX_OUTREACH_WEEKLY = 50
+MAX_OUTREACH_DAILY = 10
+OUTREACH_WARMUP_ENABLED = config('OUTREACH_WARMUP_ENABLED', default=True, cast=bool)

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Digest - JavisOne</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
+        .header h1 { margin: 0; font-size: 24px; }
+        .header p { margin: 10px 0 0; opacity: 0.9; }
+        .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
+        .stats { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .stat-box { background: white; padding: 20px; border-radius: 8px; text-align: center; flex: 1; margin: 0 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .stat-box:first-child { margin-left: 0; }
+        .stat-box:last-child { margin-right: 0; }
+        .stat-number { font-size: 32px; font-weight: bold; color: #667eea; }
+        .stat-label { font-size: 12px; color: #666; text-transform: uppercase; }
+        .section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .section h2 { margin-top: 0; color: #667eea; font-size: 18px; }
+        .lead-item { padding: 15px; border-bottom: 1px solid #eee; }
+        .lead-item:last-child { border-bottom: none; }
+        .lead-name { font-weight: bold; color: #333; }
+        .lead-details { font-size: 14px; color: #666; margin-top: 5px; }
+        .priority-hot { color: #e74c3c; }
+        .priority-warm { color: #f39c12; }
+        .priority-cool { color: #3498db; }
+        .priority-nurture { color: #95a5a6; }
+        .button { display: inline-block; background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 20px; }
+        .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #999; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Daily Digest</h1>
+        <p>{{ date }}</p>
+    </div>
+    
+    <div class="content">
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">{{ new_leads.count }}</div>
+                <div class="stat-label">New Leads</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ hot_leads.count }}</div>
+                <div class="stat-label">Hot Pending</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ upcoming_calls.count }}</div>
+                <div class="stat-label">Upcoming Calls</div>
+            </div>
+        </div>
+
+        {% if hot_leads %}
+        <div class="section">
+            <h2>🔥 Hot Leads Requiring Action</h2>
+            {% for lead in hot_leads %}
+            <div class="lead-item">
+                <div class="lead-name">{{ lead.organization_name }}</div>
+                <div class="lead-details">
+                    {{ lead.sponsor_name }} • {{ lead.email }}<br>
+                    Score: <span class="priority-hot">{{ lead.qualification_score }}/100</span> • 
+                    Submitted: {{ lead.submitted_at|date:"M d, H:i" }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if new_leads %}
+        <div class="section">
+            <h2>📥 New Leads (24h)</h2>
+            {% for lead in new_leads %}
+            <div class="lead-item">
+                <div class="lead-name">{{ lead.organization_name }}</div>
+                <div class="lead-details">
+                    {{ lead.sponsor_name }} • {{ lead.industry }}<br>
+                    Score: <span class="priority-{{ lead.priority_tier }}">{{ lead.qualification_score }}/100 ({{ lead.get_priority_tier_display }})</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if upcoming_calls %}
+        <div class="section">
+            <h2>📅 Upcoming Calls (Next 48h)</h2>
+            {% for lead in upcoming_calls %}
+            <div class="lead-item">
+                <div class="lead-name">{{ lead.organization_name }}</div>
+                <div class="lead-details">
+                    {{ lead.sponsor_name }} • {{ lead.alignment_call_scheduled|date:"M d, H:i" }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div style="text-align: center;">
+            <a href="https://dash.javisone.com" class="button">View Full Dashboard</a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>JavisOne - AI Team Member for Your Organization</p>
+        <p>A product of Simba Innovative FZ-LLC</p>
+    </div>
+</body>
+</html>
