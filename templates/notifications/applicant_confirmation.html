@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Application Received - JavisOne</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #1a1a2e; color: white; padding: 30px; text-align: center; }
+        .content { background: #f9f9f9; padding: 30px; }
+        .score { font-size: 48px; font-weight: bold; color: #338dff; text-align: center; margin: 20px 0; }
+        .tier { text-align: center; font-size: 24px; margin-bottom: 20px; }
+        .tier.hot { color: #ff4757; }
+        .tier.warm { color: #ffa502; }
+        .tier.cool { color: #338dff; }
+        .tier.nurture { color: #747d8c; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+        .button { display: inline-block; background: #338dff; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Executive Pilot Application Received</h1>
+        </div>
+        <div class="content">
+            <p>Dear {{ sponsor_name }},</p>
+            
+            <p>Thank you for submitting your Executive Pilot application for <strong>{{ organization_name }}</strong>.</p>
+            
+            <p>We've evaluated your organizational profile and assigned you the following priority tier:</p>
+            
+            <div class="score">{{ score }}/100</div>
+            <div class="tier {{ tier }}">
+                {% if tier == 'hot' %}🔥 HOT Priority{% endif %}
+                {% if tier == 'warm' %}🔆 WARM Priority{% endif %}
+                {% if tier == 'cool' %}❄️ COOL Priority{% endif %}
+                {% if tier == 'nurture' %}🌱 NURTURE Track{% endif %}
+            </div>
+            
+            <p><strong>Estimated Response Time:</strong> {{ estimated_response }}</p>
+            
+            <p>Our executive strategy team will review your application and contact you within the timeframe above to schedule a structured alignment call.</p>
+            
+            <h3>What's Next?</h3>
+            <ol>
+                <li>Application review by our strategy team</li>
+                <li>Executive alignment call invitation</li>
+                <li>Pilot program onboarding (if selected)</li>
+            </ol>
+            
+            <p style="text-align: center; margin-top: 30px;">
+                <a href="https://javisone.com/status/{{ application_id }}" class="button">Check Application Status</a>
+            </p>
+            
+            <p>If you have any questions, please reply to this email.</p>
+            
+            <p>Best regards,<br>The JavisOne Executive Team</p>
+        </div>
+        <div class="footer">
+            <p>JavisOne - Executive Intelligence System</p>
+            <p>This is an automated message. Please do not reply directly to this email.</p>
+        </div>
+    </div>
+</body>
+</html>
